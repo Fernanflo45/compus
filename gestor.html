@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .sale-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sale-item:last-child {
+            border-bottom: none;
+        }
+
+        .sale-details {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .sale-actions button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .accept-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .reject-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .sale-status {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .accepted {
+            color: green;
+        }
+
+        .rejected {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestor de Ventas</h1>
+
+        <!-- Primer producto vendido -->
+        <div class="sale-item" id="sale1">
+            <div class="sale-details">
+                <h2>Producto: Laptop Lenovo</h2>
+                <p>Cantidad: 1</p>
+                <p>Precio: $800</p>
+                <p class="sale-status">Estado: <span id="status1">Pendiente</span></p>
+            </div>
+            <div class="sale-actions">
+                <button class="accept-btn" onclick="acceptSale(1)">Aceptar</button>
+                <button class="reject-btn" onclick="rejectSale(1)">Rechazar</button>
+            </div>
+        </div>
+
+        <!-- Segundo producto vendido -->
+        <div class="sale-item" id="sale2">
+            <div class="sale-details">
+                <h2>Producto: Mouse Inalámbrico</h2>
+                <p>Cantidad: 2</p>
+                <p>Precio: $40</p>
+                <p class="sale-status">Estado: <span id="status2">Pendiente</span></p>
+            </div>
+            <div class="sale-actions">
+                <button class="accept-btn" onclick="acceptSale(2)">Aceptar</button>
+                <button class="reject-btn" onclick="rejectSale(2)">Rechazar</button>
+            </div>
+        </div>
+
+        <!-- Tercer producto vendido -->
+        <div class="sale-item" id="sale3">
+            <div class="sale-details">
+                <h2>Producto: Teclado Mecánico</h2>
+                <p>Cantidad: 1</p>
+                <p>Precio: $120</p>
+                <p class="sale-status">Estado: <span id="status3">Pendiente</span></p>
+            </div>
+            <div class="sale-actions">
+                <button class="accept-btn" onclick="acceptSale(3)">Aceptar</button>
+                <button class="reject-btn" onclick="rejectSale(3)">Rechazar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function acceptSale(saleId) {
+            document.getElementById(`status${saleId}`).innerText = "Aceptada";
+            document.getElementById(`status${saleId}`).classList.add("accepted");
+            document.getElementById(`status${saleId}`).classList.remove("rejected");
+        }
+
+        function rejectSale(saleId) {
+            document.getElementById(`status${saleId}`).innerText = "Rechazada";
+            document.getElementById(`status${saleId}`).classList.add("rejected");
+            document.getElementById(`status${saleId}`).classList.remove("accepted");
+        }
+    </script>
+</body>
+</html>

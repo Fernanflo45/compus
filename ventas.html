@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Gestión de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-right: 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        /* Tabla de ventas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        table, th, td {
+            border: 1px solid white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: rgba(0, 123, 255, 0.8);
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .modal-content button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        /* Elemento decorativo */
+        .decorative-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .decorative-section img {
+            max-width: 200px;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .decorative-section h2 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <h2>Admin Panel</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="ventas.html">Gestión de Ventas</a></li>
+                <li><a href="inventario.html">Gestión de Inventario</a></li>
+                <li><a href="usuarios.html">Gestión de Usuarios</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <div class="container">
+        <h1>Gestión de Ventas</h1>
+        <button class="btn btn-add" onclick="openAddModal()">Agregar Venta</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Venta</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="sales-body">
+                <tr>
+                    <td>1</td>
+                    <td>Juan Pérez</td>
+                    <td>Laptop Lenovo</td>
+                    <td>$800</td>
+                    <td>1</td>
+                    <td>$800</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="openEditModal(this)">Editar</button>
+                        <button class="btn btn-delete" onclick="deleteSale(this)">Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Ana Gómez</td>
+                    <td>Mouse Inalámbrico</td>
+                    <td>$25</td>
+                    <td>2</td>
+                    <td>$50</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="openEditModal(this)">Editar</button>
+                        <button class="btn btn-delete" onclick="deleteSale(this)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Sección decorativa -->
+        <div class="decorative-section">
+            <img src="logo.png" alt="Logo decorativo">
+            <h2>¡Lleva el control de tus ventas!</h2>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar ventas -->
+    <div id="salesModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Agregar Venta</h3>
+            <input type="text" id="customer-name" placeholder="Nombre del Cliente">
+            <input type="text" id="product-name" placeholder="Nombre del Producto">
+            <input type="number" id="product-price" placeholder="Precio" step="0.01">
+            <input type="number" id="product-quantity" placeholder="Cantidad">
+            <button id="save-button" onclick="saveSale()">Guardar</button>
+            <button onclick="closeSalesModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedRow;
+        let isEditMode = false;
+
+        // Abrir modal para agregar una nueva venta
+        function openAddModal() {
+            document.getElementById('modal-title').innerText = 'Agregar Venta';
+            document.getElementById('customer-name').value = '';
+            document.getElementById('product-name').value = '';
+            document.getElementById('product-price').value = '';
+            document.getElementById('product-quantity').value = '';
+            isEditMode = false;
+            document.getElementById('salesModal').style.display = 'flex';
+        }
+
+        // Abrir modal para editar una venta
+        function openEditModal(button) {
+            const row = button.parentNode.parentNode;
+            selectedRow = row;
+
+            document.getElementById('modal-title').innerText = 'Editar Venta';
+            document.getElementById('customer-name').value = row.cells[1].innerText;
+            document.getElementById('product-name').value = row.cells[2].innerText;
+            document.getElementById('product-price').value = row.cells[3].innerText;
+            document.getElementById('product-quantity').value = row.cells[4].innerText;
+            isEditMode = true;
+
+            document.getElementById('salesModal').style.display = 'flex';
+        }
+
+        // Guardar nueva venta o actualizar existente
+        function saveSale() {
+            const customerName = document.getElementById('customer-name').value;
+            const productName = document.getElementById('product-name').value;
+            const productPrice = parseFloat(document.getElementById('product-price').value);
+            const productQuantity = parseInt(document.getElementById('product-quantity').value);
+            const total = productPrice * productQuantity;
+
+            if (!isEditMode) {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${document.getElementById('sales-body').children.length + 1}</td>
+                    <td>${customerName}</td>
+                    <td>${productName}</td>
+                    <td>$${productPrice.toFixed(2)}</td>
+                    <td>${productQuantity}</td>
+                    <td>$${total.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="openEditModal(this)">Editar</button>
+                        <button class="btn btn-delete" onclick="deleteSale(this)">Eliminar</button>
+                    </td>
+                `;
+                document.getElementById('sales-body').appendChild(newRow);
+            } else {
+                selectedRow.cells[1].innerText = customerName;
+                selectedRow.cells[2].innerText = productName;
+                selectedRow.cells[3].innerText = `$${productPrice.toFixed(2)}`;
+                selectedRow.cells[4].innerText = productQuantity;
+                selectedRow.cells[5].innerText = `$${total.toFixed(2)}`;
+            }
+
+            closeSalesModal();
+        }
+
+        // Cerrar modal
+        function closeSalesModal() {
+            document.getElementById('salesModal').style.display = 'none';
+        }
+
+        // Eliminar venta
+        function deleteSale(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        // Cerrar el modal cuando se hace clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('salesModal');
+            if (event.target === modal) {
+                closeSalesModal();
+            }
+        };
+    </script>
+</body>
+</html>
